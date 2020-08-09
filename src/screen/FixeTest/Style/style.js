@@ -169,11 +169,11 @@ export default StyleSheet.create({
   },
   viewItemRowII: {
     color: Res.Color.primers,
-    fontFamily: 'BYekanBold',
+    fontFamily: 'BYekan',
     right: 0,
     fontSize: 11,
     position: 'absolute',
-    paddingRight: 13,
+  
   },
   viewItemRowIII: {
     flexDirection: 'row',

@@ -52,6 +52,9 @@ class PerformanceScreen extends React.Component {
   };
   render() {
     let {dataPro} = this.props;
+    var timeWork= dataPro.averageAnswerTime+"";
+    var timeWorkMonth= dataPro.lastMountAnswerTime+"";
+    var timeWorkDay= dataPro.todayAnswerTime+"";
     let {
       imageBottom,
       viewFull,
@@ -150,7 +153,7 @@ class PerformanceScreen extends React.Component {
             </View>
             <View style={viewItemRow}>
               <View>
-                <Text allowFontScaling={false} numberOfLines={3} style={[textTopRank,{width: hp(8),textAlign:'center'}]}>
+                <Text allowFontScaling={false} numberOfLines={3} style={[textTopRank,{width: hp(8),textAlign:'center',    fontFamily: 'BYekan' }]}>
                   {this.state.arrayTopTeach[2].FullName}
                 </Text>
                 <View style={[viewRank, {height: hp(7)}]}>
@@ -160,7 +163,7 @@ class PerformanceScreen extends React.Component {
                 </View>
               </View>
               <View>
-                <Text allowFontScaling={false} numberOfLines={3} style={[textTopRank,{width: hp(8),textAlign:'center'}]}>
+                <Text allowFontScaling={false} numberOfLines={3} style={[textTopRank,{width: hp(8),textAlign:'center',    fontFamily: 'BYekan' }]}>
                 {this.state.arrayTopTeach[1].FullName}
                 </Text>
                 <View style={viewRank}>
@@ -170,7 +173,7 @@ class PerformanceScreen extends React.Component {
                 </View>
               </View>
               <View>
-                <Text allowFontScaling={false} numberOfLines={3} style={[textTopRank,{width: hp(8),textAlign:'center'}]}>
+                <Text allowFontScaling={false} numberOfLines={3} style={[textTopRank,{width: hp(8),textAlign:'center',    fontFamily: 'BYekan' }]}>
                 {this.state.arrayTopTeach[0].FullName}
                 </Text>
                 <View style={[viewRank, {height: hp(10)}]}>
@@ -214,17 +217,17 @@ class PerformanceScreen extends React.Component {
             <View style={viewItemRow}>
               <Text
                 allowFontScaling={false}
-                style={[textBottomRank, {flex: 1, textAlign: 'center'}]}>
-               {"فیدبک ها:"}
+                style={[textBottomRank, {flex: 1, textAlign: 'center',    fontFamily: 'BYekan' }]}>
+               {`رتبه:${dataPro.AverageScore}`}
               </Text>
               <Text
                 allowFontScaling={false}
-                style={[textBottomRank, {flex: 1}]}>
-                {`میانگین زمان\n پاسخگویی:${dataPro.averageAnswerTime==null?"":dataPro.averageAnswerTime}`}
+                style={[textBottomRank, {flex: 1,    fontFamily: 'BYekan' }]}>
+                {`میانگین زمان\n پاسخگویی:${dataPro.averageAnswerTime==null?"":+timeWork.substring(0,5)+" دقیقه "}`}
               </Text>
               <Text
                 allowFontScaling={false}
-                style={[textBottomRank, {flex: 1}]}>
+                style={[textBottomRank, {flex: 1,    fontFamily: 'BYekan' }]}>
                {` تعداد سوالات\n پاسخ داده:${dataPro.allAnswerCount==null?"":dataPro.allAnswerCount}`}
               </Text>
             </View>
@@ -232,46 +235,46 @@ class PerformanceScreen extends React.Component {
               <View style={cardBottom}>
                 <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, {  textAlign: 'right',}]}>
+                  style={[textBottomRank, {  textAlign: 'right',    fontFamily: 'BYekan' }]}>
                  {"عملکرد این ماه:"}
                 </Text>
                 <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',}]}>
+                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',    fontFamily: 'BYekan' }]}>
                   {`رتبه: ${dataPro.lastMonthRate==null?"":dataPro.lastMonthRate}`}
                 </Text>
                 <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',}]}>
+                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',    fontFamily: 'BYekan' }]}>
                   {`تعداد سوالات پاسخ داده: ${dataPro.lastMonthAnswerCount==null?"":dataPro.lastMonthAnswerCount}`}
                 </Text>
                 <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',}]}>
-                 {`ماینگین زمان پاسخگویی: ${dataPro.lastMountAnswerTime==null?"":dataPro.lastMountAnswerTime}`}
+                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',    fontFamily: 'BYekan' }]}>
+                 {`ماینگین زمان پاسخگویی: ${dataPro.lastMountAnswerTime==null?"":timeWorkMonth.substring(0,5)+" دقیقه "}`}
                 </Text>
               </View>
               <View style={cardBottomLine} />
               <View style={cardBottom}>
               <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, {   textAlign: 'right',}]}>
+                  style={[textBottomRank, {   textAlign: 'right',    fontFamily: 'BYekan' }]}>
                  {"عملکرد امروز:"}
                 </Text>
                 <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',}]}>
+                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',    fontFamily: 'BYekan' }]}>
                   {`رتبه: ${dataPro.todayRate==null?"":dataPro.todayRate}`}
                 </Text>
                 <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',}]}>
+                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',    fontFamily: 'BYekan' }]}>
                   {`تعداد سوالات پاسخ داده: ${dataPro.todayAnswerCount==null?"":dataPro.todayAnswerCount}`}
                 </Text>
                 <Text
                   allowFontScaling={false}
-                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',}]}>
-                 {`ماینگین زمان پاسخگویی: ${dataPro.todayAnswerTime==null?"":dataPro.todayAnswerTime}`}
+                  style={[textBottomRank, { color: Res.Color.gray,   textAlign: 'right',    fontFamily: 'BYekan' }]}>
+                 {`ماینگین زمان پاسخگویی: ${dataPro.todayAnswerTime==null?"":timeWorkDay.substring(0,5)+" دقیقه "}`}
                 </Text>
               </View>
             </View>

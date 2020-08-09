@@ -276,7 +276,7 @@ class PopUpReserve extends React.Component {
           </Text>
           <Text allowFontScaling={false} style={[datePopUp,{left:0,position:'absolute',top:12,fontSize:14}]}>{dataPro.questionType}</Text>
         </View>
-        <Text allowFontScaling={false} style={[datePopUp,{top:0,position:'absolute',fontSize: 11,}]}>
+        <Text allowFontScaling={false} style={[datePopUp,{top:0,position:'absolute',fontSize: 11,    fontFamily: 'BYekan' }]}>
         {dataPro.persianDate.substring(0, 10)}
             </Text>
           {/* <View style={{top:7,height:60}}>

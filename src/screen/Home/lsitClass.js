@@ -136,10 +136,10 @@ class ListClass extends React.Component {
             height: hp('50%'), // 50% of height device screen
 
           }}>
-          <Text allowFontScaling={false} style={date} maxLength="5">
-            {item.persianDate.substring(0, 10)}
+          <Text allowFontScaling={false} style={textTitle} maxLength="5">
+          {item.CrsName}  
           </Text>
-          <Text allowFontScaling={false} style={textTitle}>{item.CrsName}</Text>
+          <Text allowFontScaling={false} style={date}>{item.persianDate.substring(0, 10)}</Text>
           <View style={{height:8}}/>
           <View style={[viewCircle,{width:`100%`}]}>
          
@@ -191,7 +191,9 @@ class ListClass extends React.Component {
         <Carousel
           data={this.props.AQ_data}
           sliderWidth={250}
-                  itemWidth={250}
+                  itemWidth={240}
+               
+                  inactiveSlideOpacity={1}
                   containerCustomStyle={{
         overflow: 'visible'}}
                   contentContainerCustomStyle={{width: itemWidth,

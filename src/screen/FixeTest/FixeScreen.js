@@ -36,6 +36,8 @@ import Res from '../../Color/color';
 import OptimizedFlatList from '../../components/Optimize/OptimizedFlatList';
 import RankQuTeacher from './RankQuTeacher';
 import Toast from 'react-native-simple-toast';
+import DropdownChange from '../../components/dropChange';
+import PopUpReserve from './popUpReserve';
 
 let screenWidth = Dimensions.get('window').width;
 class FixeScreen extends React.Component {
@@ -43,15 +45,21 @@ class FixeScreen extends React.Component {
     stepOne: 1,
     groupId: 0,
     isModalVisible: false,
+    isModalPopUp:false,
+
     detail: '',
     isModalPopTextFull: false,
     dataTextItem: '',
     isModalPopImageFull: false,
     dataImageItem: '',
     CrsId: 0,
+    stepClick:0,
     isModalRankQuTeacher: false,
     rank: 0,
     isConnected:true,
+    dataDropdownQ:[],
+    titleDropdownQ:"همه مقاطع",
+    titleDropdownC:"همه دروس"
   };
   constructor(props) {
     super(props);
@@ -74,7 +82,8 @@ class FixeScreen extends React.Component {
       if(this.state.isConnected){
         this.setState({
           groupId: this.props.dataGroups[index].groupCode,
-          CrsId:0
+          CrsId:0,
+          titleDropdownQ:this.props.dataGroups[index].groupName
         });
         this.props._onCourse(this.props.dataGroups[index].groupCode);
         setTimeout(() => {
@@ -93,6 +102,8 @@ class FixeScreen extends React.Component {
 
     this.setState({
       CrsId: this.props.dataCourse[index].CrsId,
+      stepClick:0,
+      titleDropdownC:this.props.dataCourse[index].CrsName
     });
     setTimeout(() => {
       this._onGetData();
@@ -117,6 +128,10 @@ class FixeScreen extends React.Component {
           this._onGetData();
         }, 1000);
       });
+
+      this.setState({
+        dataDropdownQ:this.props.dataGroups
+      })
     // this.props._onNoAnsweredQuestionCourseBase( UserData.jsonData.teacherInfo.Rid , 27, 3273);
     // this.props._onReservedQuestionCourseBase( UserData.jsonData.teacherInfo.Rid , 27, 3273);
   }
@@ -190,6 +205,8 @@ class FixeScreen extends React.Component {
             // this.props._onCourse(this.state.groupId);
             this.setState({
               CrsId: 0,
+              stepClick:0,
+
             });
             if (this.state.stepOne == 1) {
               this.props._onNoAnsweredQuestionCourseBase(
@@ -248,7 +265,15 @@ class FixeScreen extends React.Component {
     if(this.state.isConnected){
         this.setState({
           stepOne: e,
+          CrsId:0,
+          groupId:0,
+          stepClick:1,
+          dataDropdownQ:[],
+          titleDropdownQ:'همه مقاطع',
+          titleDropdownC:"همه دروس",
+          dataDropdownQ:this.props.dataGroups,
         });
+        this.props._onGroups();
 
         if (e == 1) {
           this.props._onAllNoAnswered();
@@ -302,6 +327,19 @@ class FixeScreen extends React.Component {
     } else {
       this._openModalRankQuTeacher(e);
     }
+  };
+  _openModalPopUpQ = (e) => {
+    this.setState({
+      isModalPopUp: true,
+      isModalVisible:false,
+      tabBarVisible:false
+    });
+  };
+  _hideModalPopUpQ = (e) => {
+    this.setState({
+      isModalPopUp: false,
+       tabBarVisible:true
+    });
   };
   _hideTabBarMode = (e) => {
     this.setState({
@@ -386,19 +424,20 @@ class FixeScreen extends React.Component {
               <Text style={[date, {alignSelf: 'flex-start'}]}>
                 {item.questionType}
               </Text>
+              
               {/* <Text style={date}>{'1398/08/24'}</Text> */}
             </View>
+            <Text style={[{marginRight: 0,top:5 ,left: 0,textAlign:'left',fontFamily: 'BYekan',fontSize:11}]}>
+                {item.persianDate.substring(0, 10)}
+              </Text>
           </View>
           <View style={viewItem}>
             <Text style={[textTitle, {fontSize: 20}]}>{item.CrsName}</Text>
             <View style={viewItemRow}>
-              <Text style={[viewItemRowII, {marginRight: 0}]}>
-                {' '}
+              <Text style={[viewItemRowII, {marginRight: 0,textAlign:'right'}]}>
                 {item.persianDate.substring(0, 10)}
               </Text>
-              <Text style={[viewItemRowII, {marginRight: 0, left: 0}]}>
-                {item.persianDate.substring(0, 10)}
-              </Text>
+              
             </View>
             <View style={[viewItemRow, {marginTop: 15}]}>
               <View style={viewDetail}>
@@ -487,11 +526,11 @@ class FixeScreen extends React.Component {
             <View style={[viewHeder, {marginTop: 8}]}>
               <View style={viewFullIem}>
                 <Card style={viewLine}>
-                  <Dropdown
+                  <DropdownChange
                     textDefault="همه دروس"
+                    titleProps={this.state.titleDropdownC}
                     data={this.props.dataCourse}
-                                          textStyle={{color: '#000', paddingRight: 10,fontFamily: 'BYekan',}}
-
+                    textStyle={{color: '#000', paddingRight: 10,fontFamily: 'BYekan',}}
                     onChangeText={this._selectCourse}
                     labelExtractor={this._filterSortCourse}
                     valueExtractor={this._filterName}
@@ -501,11 +540,12 @@ class FixeScreen extends React.Component {
               <View style={{width: 10}} />
               <View style={viewFullIem}>
                 <Card style={[viewLine]}>
-                  <Dropdown
+                  <DropdownChange
                     textDefault="همه مقاطع"
-                    data={this.props.dataGroups}
-                                          textStyle={{color: '#000', paddingRight: 10,fontFamily: 'BYekan',}}
-
+                    data={this.state.dataDropdownQ}
+                    textStyle={{color: '#000', paddingRight: 10,fontFamily: 'BYekan',}}
+                    select={this.state.stepClick}
+                    titleProps={this.state.titleDropdownQ}
                     onChangeText={this._selectGroups}
                     labelExtractor={this._filterSort}
                     valueExtractor={this._filterName}
@@ -580,7 +620,7 @@ class FixeScreen extends React.Component {
           </View>
           {/* :null } */}
         </ImageBackground>
-        <Modal
+        {/* <Modal
           visible={this.state.isModalVisible}
           onDismiss={this._hideTabBarMode}>
                           <Text style={{height:`100%`,width:`100%`,position:'absolute'}} onPress={()=>this._hideTabBarMode()}/>
@@ -601,7 +641,52 @@ class FixeScreen extends React.Component {
               />
             </View>
           </View>
-        </Modal>
+        </Modal> */}
+        <Modal
+              visible={this.state.isModalVisible}
+              onDismiss={this._hideTabBarMode}>
+                              <Text style={{height:`100%`,width:`100%`,position:'absolute'}} onPress={()=>this._hideTabBarMode()}/>
+              <View style={{height: '100%', justifyContent: 'flex-end'}}>
+              <Text style={{height:`100%`,width:`100%`,position:'absolute'}} onPress={()=>this._hideTabBarMode()}/>
+                <View style={cardModelPop}>
+                  <PopUpReserve
+                    changeState={this._hideTabBarMode}
+                    dataPro={this.state.detail}
+                    navigation={this.props.navigation}
+                    hidePopUp={this._hideTabBarMode}
+                    openModalTextFull={this._openModalTextFull}
+                    openModalImageFull={this._openModalImageFull}
+                     openModalPopUpQ={this._openModalPopUpQ}
+                    subject={this.props.dataGetSubject}
+                    object={this.props.dataGetObject}
+                    onFunObject={this.props._onGetObject}
+                    isConnected={this.state.isConnected}
+                  />
+                </View>
+              </View>
+            </Modal>
+            <Modal
+              visible={this.state.isModalPopUp}
+              onDismiss={this._hideModalPopUpQ}>
+                              <Text style={{height:`100%`,width:`100%`,position:'absolute'}} onPress={()=>this._hideModalPopUpQ()}/>
+              <View style={{height: '100%', justifyContent: 'flex-end'}}>
+              <Text style={{height:`100%`,width:`100%`,position:'absolute'}} onPress={()=>this._hideModalPopUpQ()}/>
+                <View style={cardModelPop}>
+                  <PopUp
+                    changeState={this._hideModalPopUpQ}
+                    dataPro={this.state.detail}
+                    navigation={this.props.navigation}
+                    hidePopUp={this._hideModalPopUpQ}
+                    openModalTextFull={this._openModalTextFull}
+                    openModalImageFull={this._openModalImageFull}
+                    subject={this.props.dataGetSubject}
+                    object={this.props.dataGetObject}
+                    onFunObject={this.props._onGetObject}
+                    isConnected={this.state.isConnected}
+                  />
+                </View>
+              </View>
+            </Modal>
         <View style={viewActivityIndicator}>
           <ActivityIndicator
             animating={this.props.isLoadedCourse}
