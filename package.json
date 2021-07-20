@@ -18,7 +18,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.5",
     "react": "16.13.1",
-    "react-native": "0.63.2",
+    "react-native": "0.64.1",
     "react-native-audio-recorder-player": "^2.5.2",
     "react-native-axios": "^0.17.1",
     "react-native-gesture-handler": "^1.7.0",
